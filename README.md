@@ -1,2 +1,2 @@
 # IntuitScreen
-Intutive Tkinter Display
+Intutive Tkinter Display using OWM and RSS Feeds
