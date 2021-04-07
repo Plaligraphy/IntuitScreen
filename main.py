@@ -62,7 +62,7 @@ timeLabel.grid(row=0, column=0, sticky="N")
 weatherLabel.grid(row=2, column=0, sticky="W")
 newsLabel.grid(row=0, column=0)
 
-root.geometry("500x500")
+root.geometry("700x300")
 root.title("Smart Screen")
 time()
 print("Done Loading")
