@@ -3,6 +3,7 @@ from time import *
 from tkinter import *
 from feedparser import *
 from pyowm import OWM
+from math import *
 
 print(" > Start Init < ")
 
@@ -10,8 +11,10 @@ print(" > Start Init < ")
 APIKEY = '233a80f0949773a2a747fda592388231'
 owm = OWM(APIKEY)
 mgr = owm.weather_manager()
+one_call = mgr.one_call(lat=45.357132, lon=-122.84750)
+feelslike = one_call.forecast_daily[0].temperature('fahrenheit').get('feels_like_morn', None)
 print(" > Done Weather Load < ")
-observation = mgr.weather_at_place('Portland')
+observation = mgr.weather_at_zip_code('97140', 'us')
 weathervar = observation.weather.status
 
 # News Handling Code
@@ -20,6 +23,7 @@ entry = NewsFeed.entries[1]
 newsvar = entry.title
 
 print(" > Done News Load < ")
+feelslikevar = str(trunc(feelslike)) + " F"
 root = Tk()
 
 
@@ -50,6 +54,7 @@ settingsButton = Button(root, text="Settings", command=lambda: settings())
 
 timeLabel = Label(root, font=("Times", 25))
 weatherLabel = Label(root, font=("Arial", 25), text=weathervar)
+feelsLikeLabel = Label(root, font=("Arial", 20), text=feelslikevar)
 newsLabel = Label(root, font=("Arial", 12), text=newsvar)
 
 root.grid_rowconfigure(0, weight=1)
@@ -60,6 +65,7 @@ settingsButton.grid(row=2, column=2)
 
 timeLabel.grid(row=0, column=0, sticky="N")
 weatherLabel.grid(row=2, column=0, sticky="W")
+feelsLikeLabel.grid(row=3, column=0, sticky="W")
 newsLabel.grid(row=0, column=0)
 
 root.geometry("700x300")
