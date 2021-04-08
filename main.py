@@ -8,6 +8,7 @@ from math import *
 print(" > Start Init < ")
 
 # Weather Handling Code
+
 APIKEY = '233a80f0949773a2a747fda592388231'
 owm = OWM(APIKEY)
 mgr = owm.weather_manager()
@@ -25,7 +26,8 @@ newsvar = entry.title
 print(" > Done News Load < ")
 feelslikevar = str(trunc(feelslike)) + " F"
 root = Tk()
-
+finalzip = StringVar()
+finaltz = StringVar()
 
 def time():
     string = strftime("%B %d %Y \n %I:%M %p")
@@ -35,12 +37,25 @@ def time():
 
 
 def settings():
+    def getEntry():
+        finalzip.set(entry0.get())
+        finaltz.set(entry1.get())
+
+        return
     sett = Tk()
 
-    label = Label(sett, text="Settings")
-    but0 = Button(sett, text="Change Size")
-    label.grid(row=0, column=0, sticky="N")
+    zipcode = Label(sett, text="Zip Code: ")
+    entry0 = Entry(sett)
 
+    timezone = Label(sett, text="Timezone (Pacific, Mountain, Central): ")
+    entry1 = Entry(sett)
+
+    submit = Button(sett, text="Submit", command=lambda: getEntry())
+    zipcode.pack()
+    entry0.pack()
+    timezone.pack()
+    entry1.pack()
+    submit.pack()
     sett.title("Smart Screen    Settings")
     sett.geometry("400x200")
     sett.grid_rowconfigure(0, weight=1)
