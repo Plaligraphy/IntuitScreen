@@ -4,30 +4,34 @@ from tkinter import *
 from feedparser import *
 from pyowm import OWM
 from math import *
-
-print(" > Start Init < ")
+from datetime import *
+print(" > Start Init")
 
 # Weather Handling Code
-
+size = "700x300"
 APIKEY = '233a80f0949773a2a747fda592388231'
+
 owm = OWM(APIKEY)
 mgr = owm.weather_manager()
 one_call = mgr.one_call(lat=45.357132, lon=-122.84750)
 feelslike = one_call.forecast_daily[0].temperature('fahrenheit').get('feels_like_morn', None)
-print(" > Done Weather Load < ")
+print(" > Done Weather Load")
+
 observation = mgr.weather_at_zip_code('97140', 'us')
 weathervar = observation.weather.status
-
+feelslikevar = str(trunc(feelslike)) + " F"
 # News Handling Code
 NewsFeed = parse("http://rss.cnn.com/rss/cnn_topstories.rss")
 entry = NewsFeed.entries[1]
 newsvar = entry.title
 
-print(" > Done News Load < ")
-feelslikevar = str(trunc(feelslike)) + " F"
+print(" > Done News Load")
+
+
 root = Tk()
 finalzip = StringVar()
 finaltz = StringVar()
+
 
 def time():
     string = strftime("%B %d %Y \n %I:%M %p")
@@ -83,9 +87,9 @@ weatherLabel.grid(row=2, column=0, sticky="W")
 feelsLikeLabel.grid(row=3, column=0, sticky="W")
 newsLabel.grid(row=0, column=0)
 
-root.geometry("700x300")
+root.geometry(size)
 root.title("Smart Screen")
 time()
-print("Done Loading")
+print(" > Loaded in at " + size + " at " + datetime.now().strftime("%H:%M:%S"))
 root.mainloop()
 
