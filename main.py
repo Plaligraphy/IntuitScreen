@@ -1,39 +1,64 @@
-# Requires package pyowm
 from time import *
 from tkinter import *
 from feedparser import *
 from pyowm import OWM
 from math import *
 from datetime import *
-print(" > Start Init")
 
+print(" > Start Init")
+bkgrndcolor = "#999999"
+bkgrndcolor1 = "#d9002b"
 # Weather Handling Code
-size = "700x300"
+size = "900x500"
 APIKEY = '233a80f0949773a2a747fda592388231'
 
 owm = OWM(APIKEY)
 mgr = owm.weather_manager()
 one_call = mgr.one_call(lat=45.357132, lon=-122.84750)
 feelslike = one_call.forecast_daily[0].temperature('fahrenheit').get('feels_like_morn', None)
-print(" > Done Weather Load")
-
 observation = mgr.weather_at_zip_code('97140', 'us')
 weathervar = observation.weather.status
 feelslikevar = str(trunc(feelslike)) + " F"
+
+print(" > Done Weather Load")
+
 # News Handling Code
-NewsFeed = parse("http://rss.cnn.com/rss/cnn_topstories.rss")
+NewsFeed = parse("http://feeds.foxnews.com/foxnews/national")
 entry = NewsFeed.entries[1]
-newsvar = entry.title
+newsvar = "         " + entry.title
+
+NewsFeed1 = parse("http://feeds.foxnews.com/foxnews/politics")
+entry1 = NewsFeed1.entries[1]
+news1var = "         " + entry1.title
+
+NewsFeed2 = parse("http://feeds.foxnews.com/foxnews/scitech")
+entry2 = NewsFeed2.entries[1]
+news2var = "         " + entry2.title
+
+NewsFeed3 = parse("http://feeds.feedburner.com/breitbart")
+entry3 = NewsFeed3.entries[1]
+news3var = "         " + entry3.title
+
+NewsFeed4 = parse("http://www.sherwoodfire.com/RSSFeeds/rss_whats_new.cfm")
+entry4 = NewsFeed4.entries[1]
+news4var = "         " + entry4.title
+
+NewsFeed5 = parse("https://www.sherwoodconservatives.com/news/feed")
+entry5 = NewsFeed5.entries[1]
+news5var = "         " + entry5.title
 
 print(" > Done News Load")
-
-
+# Init root
 root = Tk()
+
+# To be implemented into main from settings
 finalzip = StringVar()
 finaltz = StringVar()
+# photo = PhotoImage(file="gibby.png")
 
 
 def time():
+    # Gets time for the timeLabel on main screen (root)
     string = strftime("%B %d %Y \n %I:%M %p")
     timeLabel.config(text=string)
     timeLabel.after(1000, time)
@@ -41,20 +66,21 @@ def time():
 
 
 def settings():
-    def getEntry():
+    # Settings screen (sett)
+    def getentry():
         finalzip.set(entry0.get())
         finaltz.set(entry1.get())
 
         return
     sett = Tk()
 
-    zipcode = Label(sett, text="Zip Code: ")
+    zipcode = Label(sett, text="Zip Code: ", bg=bkgrndcolor)
     entry0 = Entry(sett)
 
-    timezone = Label(sett, text="Timezone (Pacific, Mountain, Central): ")
+    timezone = Label(sett, text="Timezone (Pacific, Mountain, Central): ", bg=bkgrndcolor)
     entry1 = Entry(sett)
 
-    submit = Button(sett, text="Submit", command=lambda: getEntry())
+    submit = Button(sett, text="Submit", command=lambda: getentry(), bg=bkgrndcolor)
     zipcode.pack()
     entry0.pack()
     timezone.pack()
@@ -62,34 +88,57 @@ def settings():
     submit.pack()
     sett.title("Smart Screen    Settings")
     sett.geometry("400x200")
+    sett.configure(bg=bkgrndcolor)
     sett.grid_rowconfigure(0, weight=1)
     sett.grid_columnconfigure(0, weight=1)
     sett.mainloop()
     return
 
 
-exitbutton = Button(root, text="Exit", command=lambda: quit())
-settingsButton = Button(root, text="Settings", command=lambda: settings())
+# Buttons on Main Screen
+exitbutton = Button(root, text="Exit", command=lambda: quit(), bg=bkgrndcolor)
+settingsButton = Button(root, text="Settings", command=lambda: settings(), bg=bkgrndcolor, fg="#212121")
 
-timeLabel = Label(root, font=("Times", 25))
-weatherLabel = Label(root, font=("Arial", 25), text=weathervar)
-feelsLikeLabel = Label(root, font=("Arial", 20), text=feelslikevar)
-newsLabel = Label(root, font=("Arial", 12), text=newsvar)
+# Grid Arrangements
+timeLabel = Label(root, font=("Times", 25), bg=bkgrndcolor)
+weatherLabel = Label(root, font=("Arial", 25), text=weathervar, bg=bkgrndcolor)
+feelsLikeLabel = Label(root, font=("Arial", 20), text=feelslikevar, bg=bkgrndcolor)
+newsLabel = Label(root, font=("Arial", 12), text=newsvar, bg=bkgrndcolor)
+news1Label = Label(root, font=("Arial", 12), text=news1var, bg=bkgrndcolor)
+news2Label = Label(root, font=("Arial", 12), text=news2var, bg=bkgrndcolor)
+news3Label = Label(root, font=("Arial", 12), text=news3var, bg=bkgrndcolor)
+news4Label = Label(root, font=("Arial", 12), text=news4var, bg=bkgrndcolor)
+news5Label = Label(root, font=("Arial", 12), text=news5var, bg=bkgrndcolor)
+newsDef5Label = Label(root, font=("Arial", 12), text="Sherwood Conservatives", fg=bkgrndcolor1, bg=bkgrndcolor)
+newsDef4Label = Label(root, font=("Arial", 12), text="Sherwood Fire", fg=bkgrndcolor1, bg=bkgrndcolor)
+newsDef3Label = Label(root, font=("Arial", 12), text="Breitbart", fg=bkgrndcolor1, bg=bkgrndcolor)
+newsDef2Label = Label(root, font=("Arial", 12), text="Science and Technology (Fox News)",fg=bkgrndcolor1,bg=bkgrndcolor)
+newsDef1Label = Label(root, font=("Arial", 12), text="Politics (Fox News)", fg=bkgrndcolor1, bg=bkgrndcolor)
+newsDefLabel = Label(root, font=("Arial", 12), text="Nationwide (Fox News)", fg=bkgrndcolor1, bg=bkgrndcolor)
+timeLabel.pack()
 
-root.grid_rowconfigure(0, weight=1)
-root.grid_columnconfigure(0, weight=1)
+weatherLabel.pack()
+feelsLikeLabel.pack()
 
-exitbutton.grid(row=3, column=3)
-settingsButton.grid(row=2, column=2)
+newsDefLabel.pack()
+newsLabel.pack()
+newsDef1Label.pack()
+news1Label.pack()
+newsDef2Label.pack()
+news2Label.pack()
+newsDef3Label.pack()
+news3Label.pack()
+newsDef4Label.pack()
+news4Label.pack()
+newsDef5Label.pack()
 
-timeLabel.grid(row=0, column=0, sticky="N")
-weatherLabel.grid(row=2, column=0, sticky="W")
-feelsLikeLabel.grid(row=3, column=0, sticky="W")
-newsLabel.grid(row=0, column=0)
+news5Label.pack()
+settingsButton.pack(fill=X)
+exitbutton.pack(fill=X)
 
 root.geometry(size)
 root.title("Smart Screen")
+root.configure(bg=bkgrndcolor)
 time()
 print(" > Loaded in at " + size + " at " + datetime.now().strftime("%H:%M:%S"))
 root.mainloop()
-
