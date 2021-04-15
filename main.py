@@ -43,9 +43,9 @@ NewsFeed4 = parse("http://www.sherwoodfire.com/RSSFeeds/rss_whats_new.cfm")
 entry4 = NewsFeed4.entries[1]
 news4var = "         " + entry4.title
 
-NewsFeed5 = parse("https://www.sherwoodconservatives.com/news/feed")
-entry5 = NewsFeed5.entries[1]
-news5var = "         " + entry5.title
+# NewsFeed5 = parse("https://www.sherwoodconservatives.com/news/feed")
+# entry5 = NewsFeed5.entries[1]
+# news5var = "         " + entry5.title
 
 print(" > Done News Load")
 # Init root
@@ -108,8 +108,8 @@ news1Label = Label(root, font=("Arial", 12), text=news1var, bg=bkgrndcolor)
 news2Label = Label(root, font=("Arial", 12), text=news2var, bg=bkgrndcolor)
 news3Label = Label(root, font=("Arial", 12), text=news3var, bg=bkgrndcolor)
 news4Label = Label(root, font=("Arial", 12), text=news4var, bg=bkgrndcolor)
-news5Label = Label(root, font=("Arial", 12), text=news5var, bg=bkgrndcolor)
-newsDef5Label = Label(root, font=("Arial", 12), text="Sherwood Conservatives", fg=bkgrndcolor1, bg=bkgrndcolor)
+#news5Label = Label(root, font=("Arial", 12), text=news5var, bg=bkgrndcolor)
+#newsDef5Label = Label(root, font=("Arial", 12), text="Sherwood Conservatives", fg=bkgrndcolor1, bg=bkgrndcolor)
 newsDef4Label = Label(root, font=("Arial", 12), text="Sherwood Fire", fg=bkgrndcolor1, bg=bkgrndcolor)
 newsDef3Label = Label(root, font=("Arial", 12), text="Breitbart", fg=bkgrndcolor1, bg=bkgrndcolor)
 newsDef2Label = Label(root, font=("Arial", 12), text="Science and Technology (Fox News)",fg=bkgrndcolor1,bg=bkgrndcolor)
@@ -130,9 +130,7 @@ newsDef3Label.pack()
 news3Label.pack()
 newsDef4Label.pack()
 news4Label.pack()
-newsDef5Label.pack()
 
-news5Label.pack()
 settingsButton.pack(fill=X)
 exitbutton.pack(fill=X)
 
